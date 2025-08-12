@@ -5,7 +5,7 @@ import {
   register,
   logout
 } from '../services/localAuth.service'
-import ApiError from '../../../utils/apiError'
+
 import { UserLogin, UserRegister } from '../types/auth.types'
 import sendAuthCookies from '../../../utils/sendAuthCookies'
 

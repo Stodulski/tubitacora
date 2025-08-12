@@ -1,0 +1,132 @@
+openapi: 3.1.0
+info:
+  title: Autenticación Local API
+  version: 1.0.0
+  description: API para autenticación de usuarios mediante email y contraseña.
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+paths:
+  /api/v1/auth/local/login:
+    post:
+      summary: Iniciar sesión
+      description: Inicia sesión con email y contraseña. Devuelve datos del usuario y cookies HTTP-only.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+            example:
+              email: usuario@example.com
+              password: "123456"
+      responses:
+        '200':
+          description: Sesión iniciada correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecureUserResponse'
+              example:
+                data:
+                  id: 1
+                  username: usuario1
+        '401':
+          description: Credenciales inválidas.
+        '422':
+          description: Datos inválidos según validación.
+  /api/v1/auth/local/register:
+    post:
+      summary: Registrar usuario
+      description: Registra un nuevo usuario y devuelve datos públicos con cookies HTTP-only.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+            example:
+              username: nuevoUsuario
+              email: nuevo@example.com
+              password: "123456"
+              rePassword: "123456"
+      responses:
+        '200':
+          description: Usuario registrado correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecureUserResponse'
+              example:
+                data:
+                  id: 2
+                  username: nuevoUsuario
+        '409':
+          description: Email ya registrado.
+        '422':
+          description: Datos inválidos según validación.
+  /api/v1/auth/logout:
+    delete:
+      summary: Cerrar sesión
+      description: Elimina las cookies de autenticación y cierra la sesión.
+      responses:
+        '200':
+          description: Sesión cerrada correctamente.
+          content:
+            application/json:
+              example:
+                message: "Sesión cerrada correctamente"
+        '401':
+          description: No hay sesión activa.
+components:
+  schemas:
+    UserLogin:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: Correo electrónico del usuario.
+        password:
+          type: string
+          minLength: 6
+          description: Contraseña del usuario.
+    UserRegister:
+      type: object
+      required:
+        - username
+        - email
+        - password
+        - rePassword
+      properties:
+        username:
+          type: string
+          minLength: 4
+          maxLength: 16
+          description: Nombre de usuario único.
+        email:
+          type: string
+          format: email
+          description: Correo electrónico único.
+        password:
+          type: string
+          minLength: 6
+          description: Contraseña del usuario.
+        rePassword:
+          type: string
+          description: Confirmación de la contraseña.
+    SecureUserResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: ID interno del usuario.
+            username:
+              type: string
+              description: Nombre de usuario.
