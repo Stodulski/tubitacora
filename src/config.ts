@@ -10,7 +10,7 @@ import { errorHandler } from "./middlewares/errorHandler"
 
 import authRoutes from './components/auth/routes/auth.routes'
 
-const swaggerDocument = YAML.load('./swagger.yaml');
+const swaggerDocument = YAML.load('../swagger.yaml');
 
 
 import './db/initialize'
