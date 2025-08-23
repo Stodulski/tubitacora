@@ -52,13 +52,15 @@ export const createUser = async (
   email: string
 ): Promise<{ id: number }> => {
   try {
-    // Search user by username, if it find it, return username and password
     const user = await prisma.user.create({
       data: { password, dni, birthdate, name, lastname, email },
       select: { id: true }
     })
     return user
   } catch (error: any) {
+    if(error.code === "P2002"){
+      throw new ApiError(401, 'DNI in use.')
+    }
     if (error instanceof ApiError) {
       throw error
     }
