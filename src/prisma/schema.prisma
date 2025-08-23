@@ -1,0 +1,21 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../src/prisma"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        Int    @id @default(autoincrement())
+  password  String @db.VarChar(255)
+  dni       String @unique @db.VarChar(10)
+  name      String @db.VarChar(50)
+  lastname  String @db.VarChar(50)
+  email     String @unique @db.VarChar(50)
+  birthdate String @db.VarChar(30)
+}
