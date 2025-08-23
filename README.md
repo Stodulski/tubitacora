@@ -2,7 +2,7 @@
 
 Base URL:  
 ```
-http://localhost:3000/api/v1/auth
+https://tubitacora.vercel.app/api/v1/auth
 ```
 
 > ⚠️ Importante: Todas las peticiones deben enviarse con `credentials: 'include'` para que el navegador envíe/reciba la cookie `token`.
@@ -13,7 +13,7 @@ http://localhost:3000/api/v1/auth
 
 ```js
 async function login() {
-  const res = await fetch("http://localhost:3000/api/v1/auth/login", {
+  const res = await fetch("https://tubitacora.vercel.app/api/v1/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -44,7 +44,7 @@ async function login() {
 
 ```js
 async function register() {
-  const res = await fetch("http://localhost:3000/api/v1/auth/register", {
+  const res = await fetch("https://tubitacora.vercel.app/api/v1/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -80,7 +80,7 @@ async function register() {
 
 ```js
 async function checkSession() {
-  const res = await fetch("http://localhost:3000/api/v1/auth/session", {
+  const res = await fetch("https://tubitacora.vercel.app/api/v1/auth/session", {
     method: "GET",
     credentials: "include"
   });
@@ -106,7 +106,7 @@ async function checkSession() {
 
 ```js
 async function logout() {
-  const res = await fetch("http://localhost:3000/api/v1/auth/session", {
+  const res = await fetch("https://tubitacora.vercel.app/api/v1/auth/session", {
     method: "DELETE",
     credentials: "include"
   });
@@ -131,7 +131,7 @@ Si usás [axios](https://axios-http.com/):
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api/v1/auth",
+  baseURL: "https://tubitacora.vercel.app/api/v1/auth",
   withCredentials: true
 });
 
