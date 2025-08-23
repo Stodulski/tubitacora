@@ -45,8 +45,8 @@ export const register = async (
   email: string
 ): Promise<{ id: number }> => {
   try {
-    await authModel.checkUser(email)
-    console.log(password, rePassword)
+    await authModel.checkEmail(email)
+    await authModel.checkDni(dni)
     if (password.toLowerCase() !== rePassword.toLowerCase()) {
       throw new ApiError(401, 'Las contraseñas no coinciden.')
     }
@@ -61,9 +61,6 @@ export const register = async (
     )
     return user
   } catch (error: any) {
-    if(error.code === "P2002"){
-      throw new ApiError(401, 'Email in use.')
-    }
     if (error instanceof ApiError) {
       throw error
     }

@@ -25,7 +25,7 @@ export const findUserWithPassword = async (
   }
 }
 
-export const checkUser = async (email: string): Promise<void> => {
+export const checkEmail = async (email: string): Promise<void> => {
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -35,6 +35,24 @@ export const checkUser = async (email: string): Promise<void> => {
     })
     // if no user exists, return error
     if (user) throw new ApiError(401, 'Email ocupado.')
+  } catch (error: any) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(500, 'Server error.')
+  }
+}
+
+export const checkDni = async (dni: string): Promise<void> => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        dni
+      },
+      select: { id: true }
+    })
+    // if no user exists, return error
+    if (user) throw new ApiError(401, 'DNI ocupado.')
   } catch (error: any) {
     if (error instanceof ApiError) {
       throw error
@@ -58,9 +76,6 @@ export const createUser = async (
     })
     return user
   } catch (error: any) {
-    if(error.code === "P2002"){
-      throw new ApiError(401, 'DNI in use.')
-    }
     if (error instanceof ApiError) {
       throw error
     }
