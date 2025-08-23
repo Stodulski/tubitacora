@@ -34,7 +34,7 @@ export const checkEmail = async (email: string): Promise<void> => {
     })
     if (user) throw new ApiError(401, 'Email ocupado.')
   } catch (error: any) {
-console.log(error)
+    console.log(error)
     if (error instanceof ApiError) {
       throw error
     }
@@ -74,6 +74,9 @@ export const createUser = async (
     })
     return user
   } catch (error: any) {
+    if (error.code === 'P2000') {
+      throw new ApiError(401, 'Alguno de los campos es incorrecto.')
+    }
     if (error instanceof ApiError) {
       throw error
     }
