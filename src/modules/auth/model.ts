@@ -34,6 +34,7 @@ export const checkEmail = async (email: string): Promise<void> => {
     })
     if (user) throw new ApiError(401, 'Email ocupado.')
   } catch (error: any) {
+console.log(error)
     if (error instanceof ApiError) {
       throw error
     }
