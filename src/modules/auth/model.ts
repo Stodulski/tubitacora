@@ -7,7 +7,6 @@ export const findUserWithPassword = async (
   email: string
 ): Promise<UserWithPassword> => {
   try {
-    // Search user by username, if it find it, return username and password
     const user = await prisma.user.findUnique({
       where: {
         email
@@ -33,7 +32,6 @@ export const checkEmail = async (email: string): Promise<void> => {
       },
       select: { id: true }
     })
-    // if no user exists, return error
     if (user) throw new ApiError(401, 'Email ocupado.')
   } catch (error: any) {
     if (error instanceof ApiError) {
@@ -51,7 +49,6 @@ export const checkDni = async (dni: string): Promise<void> => {
       },
       select: { id: true }
     })
-    // if no user exists, return error
     if (user) throw new ApiError(401, 'DNI ocupado.')
   } catch (error: any) {
     if (error instanceof ApiError) {

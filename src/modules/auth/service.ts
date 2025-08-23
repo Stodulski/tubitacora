@@ -61,6 +61,7 @@ export const register = async (
     )
     return user
   } catch (error: any) {
+    console.log(error)
     if (error instanceof ApiError) {
       throw error
     }
