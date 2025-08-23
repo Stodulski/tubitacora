@@ -17,7 +17,7 @@ app.set('PORT', process.env.PORT || 3000)
 // Middlewares
 app.use(
   cors({
-    origin: process.env.CLIENT_URL?.toString(),
+    origin: "*",
     credentials: true
   })
 )
